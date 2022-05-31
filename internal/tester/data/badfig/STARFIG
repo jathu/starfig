@@ -1,0 +1,6 @@
+# STARFIG files can only have schema instances not definitions.
+BadFig = Schema(
+    fields = {
+        "name": String()
+    }
+)

@@ -1,0 +1,13 @@
+descriptor_version: v1beta
+synopsis: Run tests.
+options:
+  - name: coverage
+    short_name: c
+    description: Get test coverage.
+    bool_value: {}
+  - name: open
+    short_name: o
+    description: Open coverage in browser.
+    bool_value: {}
+runtime:
+  run: $FX_WORKSPACE_DIRECTORY/tool/test/main.sh

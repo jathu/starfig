@@ -1,0 +1,1 @@
+load("//badfig/STARFIG", "BadFig")

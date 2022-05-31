@@ -1,0 +1,7 @@
+load("//example/geography/metadata.star", "Area", "Language")
+
+english = Language(name = "English", short_name = "en")
+
+french = Language(name = "French", short_name = "fr")
+
+mandarin = Language(name = "Mandarin", short_name = "zh")

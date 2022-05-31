@@ -1,0 +1,1 @@
+exampleString = "this should fail to be exported as a target"

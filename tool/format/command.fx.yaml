@@ -1,0 +1,4 @@
+descriptor_version: v1beta
+synopsis: Lint and format files.
+runtime:
+  run: $FX_WORKSPACE_DIRECTORY/tool/format/main.sh

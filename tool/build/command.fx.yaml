@@ -1,0 +1,14 @@
+descriptor_version: v1beta
+synopsis: Build and/or run starfig CLI.
+options:
+  - name: run
+    short_name: r
+    description: Run the CLI after building.
+    bool_value: {}
+arguments:
+  - name: proxy-arguments
+    description: Arguments to pass to the starfig CLI.
+    string_value:
+      list: true
+runtime:
+  run: $FX_WORKSPACE_DIRECTORY/tool/build/main.sh

@@ -1,0 +1,9 @@
+descriptor_version: v1beta
+synopsis: Generate a Homebrew script.
+arguments:
+  - name: version
+    description: The version to generate.
+    string_value:
+      required: true
+runtime:
+  run: ruby $FX_WORKSPACE_DIRECTORY/tool/brew/update/main.rb

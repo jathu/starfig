@@ -1,0 +1,8 @@
+load("//fruit/fruit.star", "Fruit")
+load("//trait/STARFIG", "red", "green", "yellow")
+
+apple = Fruit(
+	name = "Apple",
+    # This is an invalid type — expected array of colors.
+	colors = 416
+)

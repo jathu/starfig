@@ -1,0 +1,39 @@
+load("//example/geography/country/country.star", "Country")
+load("//example/geography/metadata.star", "Area", "Language")
+load("//example/geography/STARFIG", "english", "french", "mandarin")
+
+canada = Country(
+	in_g7 = True,
+	population = 38000000,
+	area = Area(
+		value = 3855000.0,
+		unit = "mi"
+	),
+	capital = "Ottawa",
+	languages = [english, french],
+	calling_codes = ["+1"]
+)
+
+usa = Country(
+	in_g7 = True,
+	population = 329500000,
+	area = Area(
+		value = 3797000.0,
+		unit = "mi"
+	),
+	capital = "Washington, D.C.",
+	languages = [english],
+	calling_codes = ["+1"]
+)
+
+china = Country(
+	in_g7 = False,
+	population = 1402000000,
+	area = Area(
+		value = 3705000.0,
+		unit = "mi"
+	),
+	capital = "Beijing",
+	languages = [mandarin],
+	calling_codes = ["+86", "+852", "+853"]
+)

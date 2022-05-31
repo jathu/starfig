@@ -1,0 +1,10 @@
+load("//tool/changelog/defs.star", "Version", "Change", "ChangeLog")
+
+changelog = ChangeLog(
+	changes = [
+		Change(
+			version = Version(major = 0, minor = 1),
+			log = "First commit!"
+		),
+	]
+)

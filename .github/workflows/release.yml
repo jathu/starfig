@@ -1,0 +1,82 @@
+name: release
+on:
+  push:
+    paths:
+      - tool/changelog/STARFIG
+    branches:
+      - master
+jobs:
+  create-release:
+    name: create-release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.release.outputs.upload_url }}
+      starfig_version: ${{ env.STARFIG_VERSION }}
+      starfig_changelog: ${{ env.STARFIG_CHANGELOG }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.18
+      - name: Get the Release Version
+        shell: bash
+        run: .github/workflows/populate_release.sh
+      - name: Create GitHub Release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.STARFIG_VERSION }}
+          release_name: ${{ env.STARFIG_VERSION }}
+          body: ${{ env.STARFIG_CHANGELOG }}
+  build-release:
+    name: build-release
+    needs:
+      - create-release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            platform: macos-x86
+          - os: ubuntu-20.04
+            platform: linux-x86
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.18
+      - name: Run Tests
+        run: go test ./...
+      - name: Run Build
+        run: |
+          go build -ldflags "-X main.starfigVersion=${{ needs.create-release.outputs.starfig_version }}" -o .build/starfig
+      - name: Prepare Package
+        shell: bash
+        run: |
+          package_name="starfig-${{ needs.create-release.outputs.starfig_version }}-${{ matrix.platform }}.zip"
+
+          cd .build
+          package_path="$(pwd)/starfig.zip"
+          zip "$package_path" starfig
+
+          echo "PACKAGE_NAME=$package_name" >> $GITHUB_ENV
+          echo "PACKAGE_PATH=$package_path" >> $GITHUB_ENV
+      - name: Upload Package
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_name: ${{ env.PACKAGE_NAME }}
+          asset_path: ${{ env.PACKAGE_PATH }}
+          asset_content_type: application/octet-stream
