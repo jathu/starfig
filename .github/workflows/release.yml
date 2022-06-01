@@ -59,7 +59,7 @@ jobs:
         run: go test ./...
       - name: Run Build
         run: |
-          go build -ldflags "-X main.starfigVersion=${{ needs.create-release.outputs.starfig_version }}" -o .build/starfig
+          go build -ldflags "-s -w -X main.starfigVersion=${{ needs.create-release.outputs.starfig_version }}" -o .build/starfig
       - name: Prepare Package
         shell: bash
         run: |
