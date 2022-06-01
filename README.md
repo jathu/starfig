@@ -54,7 +54,7 @@ __Features__
 ### Installation
 
 * macOS
-    * `brew install starfig`
+    * ~`brew install starfig`~ It's in the process: [https://github.com/Homebrew/homebrew-core/pull/102655](https://github.com/Homebrew/homebrew-core/pull/102655)
 * Go
     * `go install github.com/jathu/starfig@latest`
 * Linux
